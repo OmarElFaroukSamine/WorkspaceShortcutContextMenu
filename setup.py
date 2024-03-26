@@ -19,7 +19,6 @@ def main():
 
     reg.SetValueEx(key, 'Icon', 0, reg.REG_SZ, str(cpath / "data" / "icon.ico"))
 
-    reg.SetValue(command_key, '', reg.REG_SZ, str(cpath / "src" / ""))
-
+    reg.SetValue(command_key, '', reg.REG_SZ, str(cpath / "main.exe"))
 if __name__ == "__main__":
     main()

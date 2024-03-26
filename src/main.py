@@ -1,15 +1,13 @@
 import os
 import tkinter as tk
-import pyshortcuts
-from win32com.client import Dispatch
 from tkinter import filedialog
+from pyshortcuts import make_shortcut
 from pathlib import Path
 
 root = tk.Tk()
 root.withdraw()
 
 cpath = str(Path.cwd())
-
 icopath = cpath + r"\\data\\icon.ico"
 
 root.iconbitmap(icopath)
@@ -33,7 +31,7 @@ if folder_path:
         f.write(content)
 
     shortcut_name = folder_name
-    pyshortcuts.make_shortcut(
+    make_shortcut(
         filepath,
         name=shortcut_name,
         icon=icopath,

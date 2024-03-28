@@ -1,28 +1,30 @@
 import os
+import sys
 import tkinter as tk
-from tkinter import filedialog
-from pyshortcuts import make_shortcut
+from tkinter import filedialog,  messagebox
+import pyshortcuts
+from win32com.client import Dispatch
 from pathlib import Path
 
 root = tk.Tk()
 root.withdraw()
 
-cpath = str(Path.cwd())
-icopath = cpath + r"\\data\\icon.ico"
+cpath = Path(sys.argv[0]).resolve().parent
+icopath = cpath.parent / "data" / "icon.ico"
 
 root.iconbitmap(icopath)
 
 folder_path = filedialog.askdirectory(
     initialdir="/",
-    title="Select a Folder"
+    title="Select workspace folder"
 )
 
 save_location = filedialog.askdirectory(
     initialdir="/",
-    title="Select where you want this workspace to be saved"
+    title="Save workspace"
 )
 
-if folder_path:
+if folder_path and save_location:
     folder_name = os.path.basename(folder_path)
     filepath = os.path.join(save_location, folder_name + ".code-workspace")
 
@@ -31,12 +33,11 @@ if folder_path:
         f.write(content)
 
     shortcut_name = folder_name
-    make_shortcut(
+    pyshortcuts.make_shortcut(
         filepath,
         name=shortcut_name,
-        icon=icopath,
+        icon=str(icopath),
         folder=None
     )
-
-else:
-    print("No folder selected.")
+else :
+    messagebox.showwarning(title="Warning", message="Error while selecting folders")
